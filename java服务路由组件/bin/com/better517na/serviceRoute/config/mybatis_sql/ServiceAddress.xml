@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.better517na.JavaServiceRouteHelper.dao.IServiceRouteDao">
+	<!-- BindingType, ServiceIP, ServicePort -->
+	<select id="getServiceAddress"
+		parameterType="com.better517na.JavaServiceRouteHelper.model.ServiceRouteInfo"
+		resultType="com.better517na.JavaServiceRouteHelper.model.ServiceRouteInfo">
+		SELECT 
+			  RouteID,
+  			  ContractName,
+  			  ServiceType,
+			  CallSystem,
+			  MachineNO,
+			  DataCenter,
+			  UniqueSign,
+			  BindingType,
+			  ServiceIP,
+			  ServicePort,
+			  SvcPath,
+			  IsValid,
+			  ModifyTime,
+			  IsDelete,
+			  IsVirtualAddress,
+			  ProgramName,
+			  RouteStatus,
+			  RequestIP,
+			  ResponseServiceSetID,
+			  Remark 
+		FROM
+		ServiceRoute
+		WHERE
+		IsDelete = '0'
+		AND IsValid = '1'
+		AND (
+			MachineNO = 'default'
+			OR
+			(			
+				UniqueSign = #{uniqueSign} 
+				AND MachineNO = #{machineNO} 
+				AND DataCenter = #{dataCenter}  
+			) 
+		)
+	</select>
+</mapper>
